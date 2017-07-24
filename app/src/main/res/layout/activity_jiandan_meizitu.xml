@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.JiandanMZTActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_bottom">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </ScrollView>
+
+
+
+
+<LinearLayout
+    android:id="@+id/layout_bottom"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="6"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_height="48dp">
+    <Button
+        android:id="@+id/previous"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="上一页"
+        android:padding="0dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@null"/>
+
+    <EditText
+        android:id="@+id/page_num_edit"
+        android:layout_weight="3"
+        android:minWidth="200dp"
+        android:textSize="14sp"
+        android:inputType="number"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/jump"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="跳转"
+        android:maxLength="2"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        android:background="@null"/>
+
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="下一页"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        android:background="@null"/>
+
+</LinearLayout>
+
+</RelativeLayout>

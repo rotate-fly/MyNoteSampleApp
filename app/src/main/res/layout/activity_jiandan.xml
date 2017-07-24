@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.huangzisheng.com.myapplication.MainActivity">
+    tools:context="com.huangzisheng.www.MainActivity">
 
     <Button
         android:id="@+id/btn"
@@ -30,20 +30,27 @@
         android:src="@drawable/meizitu001"/>
 
     <Button
-        android:id="@+id/toJiandan"
+        android:id="@+id/toJiandanMZT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="跳转到煎蛋网"
+        android:text="跳转到妹子图"
         android:layout_alignParentLeft="true"
         android:maxLines="1"
         android:textColor="@color/colorPrimary"
         android:layout_below="@id/btn"
         android:textSize="14sp"
         android:background="@null"/>
-    <WebView
-        android:id="@+id/webview"
-        android:visibility="gone"
+    <Button
+        android:id="@+id/toJiandanWLT"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="跳转到妹子图"
+        android:layout_alignParentLeft="true"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@id/toJiandanMZT"
+        android:textSize="14sp"
+        android:background="@null"/>
 </RelativeLayout>
