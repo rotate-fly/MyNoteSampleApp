@@ -4,8 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.huangzisheng.com.notesample.R;
+import com.bumptech.glide.Glide;import com.huangzisheng.www.R;
 import com.huangzisheng.www.bean.MztBean;
 
 import java.util.List;

@@ -13,8 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
-
-import com.huangzisheng.com.notesample.R;
+import com.huangzisheng.www.R;
 import com.huangzisheng.www.Tools.Constants;
 import com.huangzisheng.www.adapter.JianDanMZTAdapter;
 import com.huangzisheng.www.bean.MztBean;

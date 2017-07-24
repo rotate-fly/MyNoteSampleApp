@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import com.huangzisheng.com.notesample.R;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.huangzisheng.www.R;
 import com.huangzisheng.www.Tools.Constants;
+import com.huangzisheng.www.Tools.GlideCacheUtil;
 
 
 /**
@@ -22,6 +24,8 @@ public class JiandanActivity extends Activity implements View.OnClickListener {
 
     ImageView image;
     Button toJiandanMZT,toJiandanWLT;
+    TextView cacheSize;
+    LinearLayout clearCacheLayout;
 
 
     @Override
@@ -39,8 +43,17 @@ public class JiandanActivity extends Activity implements View.OnClickListener {
         image = (ImageView) findViewById(R.id.image);
         toJiandanMZT = (Button) findViewById(R.id.toJiandanMZT);
         toJiandanWLT = (Button) findViewById(R.id.toJiandanWLT);
+        cacheSize = (TextView) findViewById(R.id.cache_size);
+        clearCacheLayout = (LinearLayout) findViewById(R.id.clear_cache);
+        clearCacheLayout.setOnClickListener(this);
         toJiandanWLT.setOnClickListener(this);
         toJiandanMZT.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cacheSize.setText(GlideCacheUtil.getInstance().getCacheSize(this));
     }
 
     @Override
@@ -55,6 +68,10 @@ public class JiandanActivity extends Activity implements View.OnClickListener {
                 Intent intent1 = new Intent(this, JiandanMZTActivity.class);
                 intent1.putExtra("url", Constants.BORING_URL);
                 startActivity(intent1);
+                break;
+            case R.id.clear_cache:
+                GlideCacheUtil.getInstance().clearImageAllCache(this);
+                cacheSize.setText("0.0M");
                 break;
         }
     }

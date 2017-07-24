@@ -16,8 +16,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import com.huangzisheng.com.notesample.R;
 import com.huangzisheng.www.activity.JiandanActivity;
 
 

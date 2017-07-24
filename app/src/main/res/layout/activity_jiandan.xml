@@ -46,11 +46,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="跳转到妹子图"
+        android:text="跳转到无聊图"
         android:layout_alignParentLeft="true"
         android:maxLines="1"
         android:textColor="@color/colorPrimary"
         android:layout_below="@id/toJiandanMZT"
         android:textSize="14sp"
         android:background="@null"/>
+    <LinearLayout
+        android:id="@+id/clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:background="#e5e5e5"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清理缓存"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            />
+        <TextView
+            android:id="@+id/cache_size"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00M"
+            android:textSize="16sp"
+            android:textColor="#ff4891"/>
+
+    </LinearLayout>
+
 </RelativeLayout>
