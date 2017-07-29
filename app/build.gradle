@@ -10,14 +10,70 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true  //突破应用方法数65535的一个限制
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
+
     }
-    buildTypes {
+
+    /*添加签名文件配置*/
+    signingConfigs {
+        debug {}
+        //为release包添加签名文件配置
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            storeFile file("common.jks")
+            storePassword "123456"
+            keyAlias "common"
+            keyPassword "123456"
         }
     }
+
+    /**友盟多渠道打包--多渠道脚本支持*/
+    productFlavors {
+        xiaomi {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+//            resValue("string","app_name","xiammi_app") //修改资源文件中的字符，使用时要把原先的字符注释掉
+        }
+        wandoujia {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+//            resValue("string","app_name","wandoujia_app")
+        }
+
+/*        okhttp{
+            applicationIdSuffix "okhttp"  //会在原本的包后面加上_okhttp
+            resValue("string","app_name","okhttp")
+        }
+        jpush{
+            applicationIdSuffix "jpush"
+            resValue("string","app_name","jpush")
+        }*/
+
+        productFlavors.all {
+            flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+    }
+
+    buildTypes {
+        release {
+
+            minifyEnabled false  //false:为不启用混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+// 指定生产包的输出文件名
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为wooyun_v1.0_wandoujia.apk
+                        def fileName = "hzs${variant.productFlavors[0].name}_${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -36,5 +92,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
 
+    //友盟统计库依赖
+    compile 'com.umeng.analytics:analytics:latest.integration'
 
 }

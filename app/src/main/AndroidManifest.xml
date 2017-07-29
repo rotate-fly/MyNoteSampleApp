@@ -2,7 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.huangzisheng.www">
 
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="25" />
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -10,6 +25,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--友盟相关的-meta-data-->
+        <meta-data
+        android:name="UMENG_CHANNEL"
+        android:value="${UMENG_CHANNEL_VALUE}" /><!--渠道号-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="597cc4fa07fe6538dc000915" /><!--友盟appkey-->
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.JiandanActivity"/>
-        <activity android:name=".activity.JiandanMZTActivity"/>
+        <activity android:name=".activity.JiandanActivity" />
+        <activity android:name=".activity.JiandanMZTActivity" />
 
     </application>
 

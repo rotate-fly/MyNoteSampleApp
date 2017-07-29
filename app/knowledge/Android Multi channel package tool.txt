@@ -1,0 +1,230 @@
+1、多渠道：（因为国内有多个平台；一般一个渠道对应一个平台）
+     通过多渠道，可以更详细的统计app被下载的途径
+     通过多渠道，我们可以查看app在每个渠道上的表现
+	 通过多渠道，更有利于我们app的推广
+2、多渠道打包原理：（主要在grade中进行编程）
+     原理很简单，就是在我们每个平台或市场的apk指定一个唯一的标识符--为apk文件指定唯一的id
+      Android中我们通常在androidmanifest.xml中为其指定--在	 androidmanifest.xml中更改
+3、使用友盟进行多渠道打包步骤（也可使用百度统计）---查看官方文档
+  使用三方统计可以统计不同市场下的下载量之类的信息
+   a、下载sdk并集成
+   b、在manifest.xml中配置渠道号和Appkey
+   c、字应用module中build.gradle中编写多渠道脚本
+
+4、使用步骤
+ 1）添加对友盟库的依赖：
+ //友盟统计库依赖
+    compile 'com.umeng.analytics:analytics:latest.integration'
+
+2）在manifest.xml中去声明我们的appkey，以及我们的渠道占位符
+	        <!--友盟相关的-meta-data-->
+        <meta-data
+        android:name="UMENG_CHANNEL"
+        android:value="${UMENG_CHANNEL_VALUE}" /><!--渠道号-->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="597cc4fa07fe6538dc000915" /><!--友盟appkey-->
+
+3）在build.gradle中动态的替换掉我们的占位符的值
+	apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.huangzisheng.www"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true  //突破应用方法数65535的一个限制
+        manifestPlaceholders = [
+                /*     app_name     : "@string/app_name",
+                     desk_name    : "@string/app_name",
+                     umeng_channel: "测试版"*/
+                UMENG_CHANNEL_VALUE: "umeng"
+        ]
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false  //false:为不启用混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+        }
+    }
+    /*添加签名文件配置*/
+    signingConfigs {
+        debug {}
+
+        /**为release包添加签名文件配置*/
+        release {
+            storeFile file("commom.jks")
+            storePassword "bianqianga"
+            keyAlias "common"
+            keyPassword "123456"
+        }
+    }
+
+
+    /**友盟多渠道打包*/
+    productFlavors {
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+        productFlavors.all {
+            flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+    }
+
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:design:25.3.1'
+
+    compile 'com.android.support:design:25.0.1'
+
+    compile 'org.jsoup:jsoup:1.10.3'
+
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    compile 'com.android.support:support-v4:25.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+
+    //友盟统计库依赖
+    compile 'com.umeng.analytics:analytics:latest.integration'
+
+}
+  4）在控制台使用 gradlew assembleRelease去自动打出所用的渠道
+
+  assembleDebug
+  assemblewandoujiaRelease
+
+
+5、完整的build.gradle文件
+
+  apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.huangzisheng.www"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true  //突破应用方法数65535的一个限制
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
+
+    }
+
+    /*添加签名文件配置*/
+    signingConfigs {
+        debug {}
+        //为release包添加签名文件配置
+        release {
+            storeFile file("common.jks")
+            storePassword "123456"
+            keyAlias "common"
+            keyPassword "123456"
+        }
+    }
+
+    /**友盟多渠道打包--多渠道脚本支持*/
+    productFlavors {
+        xiaomi {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+//            resValue("string","app_name","xiammi_app") //修改资源文件中的字符，使用时要把原先的字符注释掉
+        }
+        wandoujia {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+//            resValue("string","app_name","wandoujia_app")
+        }
+
+/*        okhttp{
+            applicationIdSuffix "okhttp"  //会在原本的包后面加上_okhttp
+            resValue("string","app_name","okhttp")
+        }
+        jpush{
+            applicationIdSuffix "jpush"
+            resValue("string","app_name","jpush")
+        }*/
+
+        productFlavors.all {
+            flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+    }
+
+    buildTypes {
+        release {
+
+            minifyEnabled false  //false:为不启用混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+// 指定生产包的输出文件名
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为wooyun_v1.0_wandoujia.apk
+                        def fileName = "hzs${variant.productFlavors[0].name}_${defaultConfig.versionName}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:design:25.3.1'
+
+    compile 'com.android.support:design:25.0.1'
+
+    compile 'org.jsoup:jsoup:1.10.3'
+
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    compile 'com.android.support:support-v4:25.3.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+
+    //友盟统计库依赖
+    compile 'com.umeng.analytics:analytics:latest.integration'
+
+}
+
+
+
+
+
+
+
+  出现错误： Could not get unknown property 'release' for SigningConfig container
+  解决：
+1)在app 的module下build.gradle文件中的buildTypes{}中使用使用了signingConfig signingConfigs.release,但将signingConfigs{}放到了buildType{}的后面,导致编译的时候无法找到,
+2)还有一种可能,那就是signingConfigs{}中真的没有声明release这个属性.
+
+  出现错误：
+  Error:Execution failed for task ':app:processWandoujiaDebugManifest'.
+> Manifest merger failed with multiple errors, see logs
+原因：点击查看日志就可以解决
