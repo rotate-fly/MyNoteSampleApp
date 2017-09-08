@@ -7,3 +7,7 @@
 /build
 /captures
 .externalNativeBuild
+/.idea
+/.gitignore
+.idea/encodings.xml
+
