@@ -82,6 +82,7 @@ public class JiandanMZTActivity extends Activity implements View.OnClickListener
             @Override
             public void run() {
                 try {
+                    Log.d("connectUrl",urlStr);
                     getDatas(urlStr);
                 } catch (IOException e) {
 
@@ -112,7 +113,7 @@ public class JiandanMZTActivity extends Activity implements View.OnClickListener
         for (Element e : imageDiv) {
 
             String id = e.select("a[href]").get(0).text();
-            String url = e.select("p").select("a[href]").get(0).attr("href");
+            String url = e.select("a[href]").get(0).select("img").attr("src");//e.select("p").
             MztBean mztBean = new MztBean(url, id, "");
             mztBeanList.add(mztBean);
         }
@@ -163,12 +164,17 @@ public class JiandanMZTActivity extends Activity implements View.OnClickListener
                     Snackbar.make(view, "到底了", Snackbar.LENGTH_SHORT).show();
                 else {
                     url = url.replace("" + curPage, "" + (curPage - 1));
+                    if(!url.contains("http"))
+                        url="http:"+url;
                     threadToGetData(url);
                     curPage--;
+
                 }
                 break;
             case R.id.jump:
-                url = url.replace("" + curPage, "" + pageNum.getText());
+                url= url.replace("" + curPage, "" + pageNum.getText());
+                if(!url.contains("http"))
+                    url="http:"+url;
                 threadToGetData(url);
                 curPage = Integer.parseInt(pageNum.getText().toString());
                 break;
@@ -177,6 +183,8 @@ public class JiandanMZTActivity extends Activity implements View.OnClickListener
                     Snackbar.make(view, "到顶了", Snackbar.LENGTH_SHORT).show();
                 else {
                     url = url.replace("" + curPage, "" + (curPage + 1));
+                    if(!url.contains("http"))
+                        url="http:"+url;
                     threadToGetData(url);
                     curPage++;
                 }

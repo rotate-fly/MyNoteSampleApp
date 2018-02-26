@@ -41,6 +41,18 @@
         android:layout_below="@id/btn"
         android:textSize="14sp"
         android:background="@null"/>
+    <Button
+        android:id="@+id/toViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="跳转到ViewPager"
+        android:layout_alignParentLeft="true"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@id/toJiandan"
+        android:textSize="14sp"
+        android:background="@null"/>
     <WebView
         android:id="@+id/webview"
         android:visibility="gone"

@@ -4,6 +4,7 @@ package com.huangzisheng.www.Tools;
  * Created by huangzisheng on 2017/7/19.
  */
 
+/**常量*/
 public class Constants {
 
     /**煎蛋网中的妹子图部分*/

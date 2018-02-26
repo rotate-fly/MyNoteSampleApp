@@ -38,11 +38,15 @@ public class JianDanMZTAdapter extends SimpleAdapter<MztBean> {
         ImageView imageView = viewHoder.getImageView(R.id.image);
         imageView.setDrawingCacheEnabled(true);
 
+        String url = item.getImageUrl();
+        if(!url.contains("http:")){
+            url+="http:";
+        }
         imageView.setDrawingCacheEnabled(false);
         if (item.getImageUrl().endsWith("gif"))
-            Glide.with(context).asGif().load(item.getImageUrl()).into(imageView);
+            Glide.with(context).asGif().load(url).into(imageView);
         else
-            Glide.with(context).load(item.getImageUrl()).into(imageView);
+            Glide.with(context).load(url).into(imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

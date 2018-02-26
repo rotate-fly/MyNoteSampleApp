@@ -19,11 +19,11 @@ import android.widget.ImageView;
 import com.huangzisheng.www.activity.JiandanActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     WebView webview;
     ImageView imageView;
-    Button btn,toJiandan;
+    Button btn,toJiandan,toViewPager;
 
     AnimatorSet animatorSet;
 
@@ -38,20 +38,9 @@ public class MainActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void initEvent() {
 //        setAnimatorView(imageView);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setAnimatorView(imageView);
-            }
-        });
-
-        toJiandan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, JiandanActivity.class));
-            }
-        });
+        btn.setOnClickListener(this);
+        toJiandan.setOnClickListener(this);
+        toViewPager.setOnClickListener(this);
 
     }
 
@@ -71,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.image);
         btn = (Button) findViewById(R.id.btn);
         toJiandan = (Button) findViewById(R.id.toJiandan);
+        toViewPager = (Button) findViewById(R.id.toViewPager);
     }
 
 
@@ -148,4 +138,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.toViewPager:
+                break;
+            case R.id.toJiandan:
+                startActivity(new Intent(MainActivity.this, JiandanActivity.class));
+                break;
+            case R.id.btn:
+                setAnimatorView(imageView);
+                break;
+            default:
+                break;
+        }
+    }
 }
